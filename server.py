@@ -1,6 +1,7 @@
 # Flask instance that is running server, main file for application
 from flask import Flask, render_template, request
 from weather import get_current_weather
+from chat import get_clothing_advice
 from waitress import serve
 
 # makes app a flask app
@@ -62,6 +63,15 @@ def get_weather():
     feels_like_f = float(weather_data['main']['feels_like']) # Fahrenheit
     condition_main = weather_data['weather'][0]['main']     # e.g., "Rain", "Clear", etc.
 
+    # Gemini method
+    # Ask Gemini/PaLM for clothing advice
+    gemini_response = get_clothing_advice(
+        city_name=city_name,
+        description=status_description,
+        temp_f=temp_f,
+        feels_like_f=feels_like_f
+    )
+
     # Getting clothing tips
     clothing_tips = get_clothing_recs(temp_f, condition_main)
 
@@ -72,7 +82,8 @@ def get_weather():
         status=status_description,
         temp=f"{temp_f:.1f}",
         feels_like=f"{feels_like_f:.1f}",
-        clothing_tips=clothing_tips
+        clothing_tips=clothing_tips,
+        gemini_response=gemini_response
     )
 
 
