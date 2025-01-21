@@ -7,35 +7,6 @@ from waitress import serve
 # makes app a flask app
 app = Flask(__name__)
 
-# clothing recs function
-def get_clothing_recs(temp_f, condition):
-    tips = ""
-    # Temperature-based logic (Fahrenheit thresholds)
-    if temp_f < 32:
-        tips += "Wear a heavy coat, scarf, gloves, and hat. "
-    elif temp_f < 50:
-        tips += "Wear a coat or thick jacket. "
-    elif temp_f < 68:
-        tips += "Wear a light jacket or sweater. "
-    elif temp_f < 86:
-        tips += "A T-shirt or light top is recommended. "
-    else:
-        tips += "Shorts and a tank top—stay cool! "
-
-    # Condition-based logic
-    condition_lower = condition.lower()
-    if "rain" in condition_lower:
-        tips += "Don't forget an umbrella or waterproof jacket. "
-    elif "snow" in condition_lower:
-        tips += "Wear warm boots and stay dry. "
-    elif "drizzle" in condition_lower:
-        tips += "A light waterproof jacket might be handy. "
-    elif "thunderstorm" in condition_lower:
-        tips += "Better to stay indoors until the storm passes. "
-
-    return tips.strip()
-
-
 # defining routes that would be accessed on web
 @app.route('/')
 @app.route('/index')
