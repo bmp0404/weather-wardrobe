@@ -50,7 +50,6 @@ def get_weather():
         status=status_description,
         temp=f"{temp_f:.1f}",
         feels_like=f"{feels_like_f:.1f}",
-        clothing_tips=clothing_tips,
         gemini_response=gemini_response
     )
 
