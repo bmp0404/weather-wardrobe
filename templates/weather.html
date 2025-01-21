@@ -18,9 +18,11 @@
 
     <h2>Outfit Examples</h2>
     {% if outfit_pictures %}
-      {% for url in outfit_pictures %}
-        <img src="{{ url }}" alt="Outfit Example" width="300" style="margin: 0.5rem;">
-      {% endfor %}
+      <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+        {% for url in outfit_pictures %}
+          <img src="{{ url }}" alt="Outfit Example" width="300" style="margin: 0;">
+        {% endfor %}
+      </div>
     {% else %}
       <p>No images found for these conditions.</p>
     {% endif %}

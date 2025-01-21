@@ -4,23 +4,29 @@ from chat import get_clothing_advice
 from image import fetch_outfit_images
 from waitress import serve
 
+# pip freeze > requirements.txt
+
 app = Flask(__name__)
 
 def outfit_query(temp_f, condition):
     cond_lower = condition.lower()
+    outfit_description = ""
+
     if "snow" in cond_lower:
-        return "winter coat gloves"
+        outfit_description += "winter coat gloves "
     if "rain" in cond_lower:
-        return "rain jacket umbrella"
+        outfit_description += "rain jacket umbrella "
 
     if temp_f < 50:
-        return "heavy coat"
+        outfit_description += "heavy coat "
     elif temp_f < 70:
-        return "light jacket sweater"
+        outfit_description += "light jacket sweater "
     elif temp_f < 85:
-        return "t-shirt jeans"
+        outfit_description += "t-shirt jeans "
     else:
-        return "shorts and tank top"
+        outfit_description += "shorts and tank top "
+
+    return outfit_description.strip()
 
 @app.route('/')
 @app.route('/index')
@@ -64,7 +70,7 @@ def get_weather():
         temp=f"{temp_f:.1f}",
         feels_like=f"{feels_like_f:.1f}",
         gemini_response=gemini_response,
-        outfit_pictures=image_urls  # pass the list to the template
+        outfit_pictures=image_urls  
     )
 
 if __name__ == "__main__":
