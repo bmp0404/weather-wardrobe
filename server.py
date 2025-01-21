@@ -43,9 +43,6 @@ def get_weather():
         feels_like_f=feels_like_f
     )
 
-    # Getting clothing tips
-    clothing_tips = get_clothing_recs(temp_f, condition_main)
-
 
     return render_template(
         "weather.html",
