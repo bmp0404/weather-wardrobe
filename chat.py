@@ -20,6 +20,7 @@ generation_config = {
 model = genai.GenerativeModel(
   model_name="gemini-2.0-flash-exp",
   generation_config=generation_config,
+  system_instruction="You are a meterologist and fashion expert who cares about the well being of others. You are very knowledgeable about fashion that is functional and know a lot about how different weather conditions affect daily life"
 )
 
 def get_clothing_advice(city_name, description, temp_f, feels_like_f):
@@ -35,8 +36,7 @@ def get_clothing_advice(city_name, description, temp_f, feels_like_f):
 The current weather in {city_name} is described as "{description}" with a temperature of {temp_f:.1f}°F (feels like {feels_like_f:.1f}°F).
 
 In a short 1-2 sentence response, provide:
-1) Appropriate clothing recommendations.
-2) Additional helpful tips for dealing with these conditions.
+Appropriate clothing recommendations & helpful tips for dealing with these conditions.
 """
 
     response = chat_session.send_message(prompt)
