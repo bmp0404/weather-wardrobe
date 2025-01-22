@@ -20,7 +20,15 @@ generation_config = {
 model = genai.GenerativeModel(
   model_name="gemini-2.0-flash-exp",
   generation_config=generation_config,
-  system_instruction="You are a meterologist and fashion expert who cares about the well being of others. You are very knowledgeable about fashion that is functional and know a lot about how different weather conditions affect daily life"
+  system_instruction="""You are a helpful, fashion-savvy assistant. 
+Your primary goal is to begin your response with a single, short sentence listing only the recommended clothing items. 
+The first sentence must:
+1) List heavier/main garments first (e.g., coats, jackets, pants).
+2) List lesser items/accessories last (e.g., hats, scarves, gloves).
+3) Not exceed 10 words.
+4) Use only commas for separation (no additional words or punctuation).
+After this first sentence, you may provide further recommendations in subsequent sentences.
+"""
 )
 
 def get_clothing_advice(city_name, description, temp_f, feels_like_f):
@@ -33,10 +41,12 @@ def get_clothing_advice(city_name, description, temp_f, feels_like_f):
 
     # prompt with weather data
     prompt = f"""
-The current weather in {city_name} is described as "{description}" with a temperature of {temp_f:.1f}°F (feels like {feels_like_f:.1f}°F).
+The weather in {city_name} is "{description}" with {temp_f}°F (feels like {feels_like_f}°F). 
+In your response:
+1) Begin with a single sentence listing heavier clothing items first and accessories last, separated only by commas.
+2) Keep it under 10 words (e.g., “Coat, jacket, pants, hat”).
+3) Provide any extra advice or detail in subsequent sentences only.
 
-In a short 1-2 sentence response, provide:
-Appropriate clothing recommendations & helpful tips for dealing with these conditions.
 """
 
     response = chat_session.send_message(prompt)

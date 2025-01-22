@@ -8,25 +8,19 @@ from waitress import serve
 
 app = Flask(__name__)
 
-def outfit_query(temp_f, condition):
-    cond_lower = condition.lower()
-    outfit_description = ""
+def outfit_query(gemini_descriptions):
+    # capture first sentence of gemini response
+    # parts = gemini_descriptions.split('.', 1)
+    # first_sentence = parts[0].strip()
 
-    if "snow" in cond_lower:
-        outfit_description += "winter coat gloves "
-    if "rain" in cond_lower:
-        outfit_description += "rain jacket umbrella "
+    # Remove commas and add keyword "outfit" for context
+    # query_string = first_sentence.replace(",", " ")
+    query_string = "people in rain"
+    return query_string
 
-    if temp_f < 50:
-        outfit_description += "heavy coat "
-    elif temp_f < 70:
-        outfit_description += "light jacket sweater "
-    elif temp_f < 85:
-        outfit_description += "t-shirt jeans "
-    else:
-        outfit_description += "shorts and tank top "
 
-    return outfit_description.strip()
+
+
 
 @app.route('/')
 @app.route('/index')
@@ -59,7 +53,7 @@ def get_weather():
     )
 
     # Build an Unsplash query & fetch up to 3 images
-    user_query = outfit_query(temp_f, status_description)
+    user_query = outfit_query(gemini_response)
     image_urls = fetch_outfit_images(user_query)  # returns a list of up to 3 URLs
 
     # 5) Render the template
