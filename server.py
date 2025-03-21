@@ -8,15 +8,25 @@ from waitress import serve
 
 app = Flask(__name__)
 
-def outfit_query(gemini_descriptions):
-    # capture first sentence of gemini response
-    # parts = gemini_descriptions.split('.', 1)
-    # first_sentence = parts[0].strip()
+def outfit_query(description):
+    """
+    Returns a simple Unsplash search query like 'rainy outfit' or 'sunny outfit'
+    based on the OpenWeather description.
+    """
+    desc = description.lower()
 
-    # Remove commas and add keyword "outfit" for context
-    # query_string = first_sentence.replace(",", " ")
-    query_string = "people in rain"
-    return query_string
+    if "rain" in desc:
+        return "rainy outfit"
+    elif "snow" in desc:
+        return "snowy outfit"
+    elif "cloud" in desc:
+        return "cloudy outfit"
+    elif "clear" in desc or "sun" in desc:
+        return "sunny outfit"
+    elif "mist" in desc or "fog" in desc:
+        return "foggy outfit"
+    else:
+        return "weather outfit"
 
 
 
